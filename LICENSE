@@ -1,24 +1,42 @@
-This is free and unencumbered software released into the public domain.
+import { useState } from "react"; import { Card, CardContent } from "@/components/ui/card"; import { Button } from "@/components/ui/button"; import { ShoppingCart } from "lucide-react";
 
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
+export default function Store() { const [cart, setCart] = useState([]);
 
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
+const products = [ { id: 1, name: "تيشورت مطبوع", price: 120, image: "https://via.placeholder.com/300x200?text=Tshirt", }, { id: 2, name: "كأس مطبوع", price: 70, image: "https://via.placeholder.com/300x200?text=Mug", }, { id: 3, name: "كاب عصري", price: 90, image: "https://via.placeholder.com/300x200?text=Cap", }, ];
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+const addToCart = (product) => { setCart([...cart, product]); };
 
-For more information, please refer to <https://unlicense.org>
+return ( <div className="min-h-screen bg-gray-50 text-gray-900 p-6"> <header className="flex justify-between items-center mb-8"> <h1 className="text-2xl font-bold">متجري البسيط</h1> <Button variant="outline" className="flex items-center gap-2"> <ShoppingCart size={18} /> ({cart.length}) </Button> </header>
+
+<div className="grid md:grid-cols-3 gap-6">
+    {products.map((product) => (
+      <Card key={product.id} className="rounded-2xl shadow-md">
+        <CardContent className="p-4 flex flex-col items-center">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="rounded-xl mb-4"
+          />
+          <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
+          <p className="text-gray-700 mb-4">{product.price} درهم</p>
+          <Button onClick={() => addToCart(product)}>أضف إلى السلة</Button>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+
+  <footer className="mt-12 text-center text-gray-500">
+    <p>© 2025 متجري - جميع الحقوق محفوظة</p>
+    <a
+      href="https://wa.me/212600000000"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block mt-2 text-green-600 font-medium"
+    >
+      تواصل معنا عبر واتساب
+    </a>
+  </footer>
+</div>
+
+); }
+
